@@ -1,4 +1,5 @@
 using HealthCareProject.Models;
+using HealthCareProject.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +31,13 @@ namespace HealthCareProject
         {
             //Configure Connection String Information 
             services.AddDbContext<ApplicationDbContext>(o => o.UseSqlServer(Configuration.GetConnectionString("HealthCareConnection")));
+
+            //resolving dependency injuction 
+            services.AddScoped<IRepository<Doctor>, DoctorRepository>();
+            services.AddScoped<IDoctorRepository,DoctorRepository > ();
+            services.AddScoped<IRepository<AppointmentBooking > ,AppointmentBookingRepository > ();
+
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

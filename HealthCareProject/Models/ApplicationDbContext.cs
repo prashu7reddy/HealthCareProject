@@ -14,6 +14,10 @@ namespace HealthCareProject.Models
         }
         //add the table reference
         public DbSet<Doctor> Doctors { get; set; }
+        
         public DbSet<DocSpecialization> DocSpecializations { get; set; }
+         public DbSet<Patient> Patients{ get; set; }
+         public DbSet<AppointmentBooking>AppointmentBookings { get; set; }
+
     }
 }
