@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HealthCareProject.Repository
 {
-    public class DoctorRepository : IRepository<Doctor>,IDoctorRepository
+    public class DoctorRepository : IRepository<Doctor>,IGetRepository<DoctorDto>,IDoctorRepository
     {
         private readonly ApplicationDbContext _context;
         public DoctorRepository(ApplicationDbContext context)
@@ -30,6 +30,8 @@ namespace HealthCareProject.Repository
             {
                 doctorInDb.DoctorName = obj.DoctorName;
                 doctorInDb.DocSpecializationId = obj.DocSpecializationId;
+                doctorInDb.EmailId = obj.EmailId;
+                doctorInDb.PhoneNumber = obj.PhoneNumber;
                 //_context.Entry(doctorInDb).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 _context.Doctors.Update(doctorInDb);
                 await _context.SaveChangesAsync();
@@ -50,14 +52,32 @@ namespace HealthCareProject.Repository
             return null; 
         }
 
-        public IEnumerable<Doctor> GetAll()
+        public IEnumerable<DoctorDto> GetAll()
         {
-            return _context.Doctors.ToList();
+            var doctors = _context.Doctors.Include(m => m.Specialization).Select(x => new DoctorDto
+            {
+                Id = x.Id,
+                DoctorName = x.DoctorName,
+                DocSpecializationId = x.DocSpecializationId,
+                Specialization = x.Specialization.SpecializationName,
+                EmailId=x.EmailId,
+                PhoneNumber=x.PhoneNumber
+            }).ToList();
+            return doctors;
         }
 
-        public async Task<Doctor> GetById(int id)
+        public async Task<DoctorDto> GetById(int id)
         {
-           var doctor = await _context.Doctors.FindAsync(id);
+            var doctors = await _context.Doctors.Include(x => x.Specialization).Select(x => new DoctorDto
+            {
+                Id = x.Id,
+                DoctorName = x.DoctorName,
+                DocSpecializationId = x.DocSpecializationId,
+                Specialization = x.Specialization.SpecializationName,
+                EmailId = x.EmailId,
+                PhoneNumber = x.PhoneNumber
+            }).ToListAsync();
+            var doctor = doctors.FirstOrDefault(x => x.Id == id);
             if (doctor != null)
             {
                 return doctor;

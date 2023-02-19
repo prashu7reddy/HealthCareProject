@@ -15,23 +15,25 @@ namespace HealthCareProject.Controllers
     {
         private readonly IRepository<Doctor> _repository;
         private readonly IDoctorRepository _DoctorRepository;
-        public DoctorsController(IRepository<Doctor> repository,IDoctorRepository doctorRepository)
+        private readonly IGetRepository<DoctorDto> _DoctorDtoRepository;
+        public DoctorsController(IRepository<Doctor> repository,IDoctorRepository doctorRepository,IGetRepository<DoctorDto>DoctorDtoRepository)
         {
             _repository = repository;
             _DoctorRepository = doctorRepository;
+            _DoctorDtoRepository = DoctorDtoRepository;
         }
 
         [HttpGet("GetAllDoctors")]
         
-        public IEnumerable<Doctor> GetDoctors()
+        public IEnumerable<DoctorDto> GetDoctors()
         {
-            return _repository.GetAll();
+            return _DoctorDtoRepository.GetAll();
         }
         [HttpGet]
         [Route("GetDoctorById/{id}", Name ="GetDoctorById")]
         public async Task<IActionResult> GetDoctorById(int id)
         {
-            var doctor = await _repository.GetById(id);
+            var doctor = await _DoctorDtoRepository.GetById(id);
             if (doctor != null)
             {
                 return Ok(doctor);

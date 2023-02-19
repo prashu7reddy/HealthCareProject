@@ -5,15 +5,12 @@ using System.Threading.Tasks;
 
 namespace HealthCareProject.Models
 {
-    public class Doctor
+    public class DoctorDto
     {
         public int Id { get; set; }
         public string DoctorName { get; set; }
-       
-        //navigation key
-        public DocSpecialization Specialization { get; set; }
-
         public int DocSpecializationId { get; set; }
+        public string Specialization { get; set; }
         public string PhoneNumber { get; set; }
         public string EmailId { get; set; }
     }

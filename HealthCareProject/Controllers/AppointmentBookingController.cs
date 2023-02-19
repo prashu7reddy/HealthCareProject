@@ -15,24 +15,25 @@ namespace HealthCareProject.Controllers
     public class AppointmentBookingController : ControllerBase
     {
         private readonly IRepository<AppointmentBooking> _repository;
+       private readonly IGetRepository<AppointmentBooking> _appoinmentBookingRepository;
 
-        public AppointmentBookingController(IRepository<AppointmentBooking> repository)
+        public AppointmentBookingController(IRepository<AppointmentBooking> repository, IGetRepository<AppointmentBooking> appoinmentBookingRepository)
         {
             _repository = repository;
-            
+            _appoinmentBookingRepository = appoinmentBookingRepository;
         }
 
         [HttpGet("GetAllBookings")]
         public IEnumerable<AppointmentBooking> GetAppointments()
         {
-            return _repository.GetAll();
+            return _appoinmentBookingRepository.GetAll();
         }
 
         [HttpGet]
         [Route("GetAppointmentById/{id}",Name ="GetAppointmentById")]
         public async Task<IActionResult>GetAppointmentById(int id)
         {
-            var appointment = await _repository.GetById(id);
+            var appointment = await _appoinmentBookingRepository.GetById(id);
             if(appointment != null)
             {
                 return Ok(appointment);

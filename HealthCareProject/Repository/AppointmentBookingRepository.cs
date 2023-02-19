@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HealthCareProject.Repository
 {
-    public class AppointmentBookingRepository : IRepository<AppointmentBooking>
+    public class AppointmentBookingRepository : IRepository<AppointmentBooking>,IGetRepository<AppointmentBooking>
     {
         private readonly ApplicationDbContext _context;
         public AppointmentBookingRepository(ApplicationDbContext context)
