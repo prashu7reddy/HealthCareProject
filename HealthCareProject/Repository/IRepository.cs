@@ -23,6 +23,7 @@ namespace HealthCareProject.Repository
     public interface IDoctorRepository
     {
         Task<IEnumerable<Doctor>> SearchBySpecialization(string SpecializationName);
+        Task<IEnumerable<DocSpecialization>> GetSpecializations();
     }
     public interface IGetUserDetailsRepository<T> where T : class
     {

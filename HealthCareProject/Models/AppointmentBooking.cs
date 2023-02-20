@@ -12,7 +12,7 @@ namespace HealthCareProject.Models
         public DateTime Time{get;set;}
 
         public DocSpecialization Specialization { get; set; }
-
+        
         public int DocSpecializationId { get; set; }
     }
 }

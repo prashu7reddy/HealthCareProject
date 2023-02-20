@@ -15,16 +15,16 @@ namespace HealthCareProject.Controllers
     public class AppointmentBookingController : ControllerBase
     {
         private readonly IRepository<AppointmentBooking> _repository;
-       private readonly IGetRepository<AppointmentBooking> _appoinmentBookingRepository;
+       private readonly IGetRepository<AppointmentBookingDto> _appoinmentBookingRepository;
 
-        public AppointmentBookingController(IRepository<AppointmentBooking> repository, IGetRepository<AppointmentBooking> appoinmentBookingRepository)
+        public AppointmentBookingController(IRepository<AppointmentBooking> repository, IGetRepository<AppointmentBookingDto> appoinmentBookingRepository)
         {
             _repository = repository;
             _appoinmentBookingRepository = appoinmentBookingRepository;
         }
 
         [HttpGet("GetAllBookings")]
-        public IEnumerable<AppointmentBooking> GetAppointments()
+        public IEnumerable<AppointmentBookingDto> GetAppointments()
         {
             return _appoinmentBookingRepository.GetAll();
         }

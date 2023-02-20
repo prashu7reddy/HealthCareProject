@@ -1,4 +1,5 @@
 ﻿using HealthCareProject.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HealthCareProject.Repository
 {
-    public class AppointmentBookingRepository : IRepository<AppointmentBooking>,IGetRepository<AppointmentBooking>
+    public class AppointmentBookingRepository : IRepository<AppointmentBooking>,IGetRepository<AppointmentBookingDto>
     {
         private readonly ApplicationDbContext _context;
         public AppointmentBookingRepository(ApplicationDbContext context)
@@ -49,15 +50,33 @@ namespace HealthCareProject.Repository
             return null;
         }
 
-        public IEnumerable<AppointmentBooking> GetAll()
+        public IEnumerable<AppointmentBookingDto> GetAll()
         {
-            return _context.AppointmentBookings.ToList();
+            var Appointment = _context.AppointmentBookings.Include(m => m.Specialization).Select(x => new AppointmentBookingDto
+            {
+                Id = x.Id,
+                Date = x.Date,
+                Time = x.Time,
+                DocSpecializationId = x.DocSpecializationId,
+                SpecializationName = x.Specialization.SpecializationName
+            }).ToList();
+            return Appointment;
+            
         }
 
-        public async Task<AppointmentBooking> GetById(int id)
+        public async Task<AppointmentBookingDto> GetById(int id)
         {
-            var appointment = await _context.AppointmentBookings.FindAsync(id);
-            if(appointment!= null)
+            var appointments = await  _context.AppointmentBookings.Include(m => m.Specialization).Select(x => new AppointmentBookingDto
+            {
+                Id = x.Id,
+                Date = x.Date,
+                Time = x.Time,
+                DocSpecializationId = x.DocSpecializationId,
+                SpecializationName = x.Specialization.SpecializationName
+            }).ToListAsync();
+
+            var appointment = appointments.FirstOrDefault(x => x.Id == id);
+            if (appointment!= null)
             {
                 return appointment;
             }

@@ -94,5 +94,11 @@ namespace HealthCareProject.Repository
             }
             return null;
         }
+
+        public async Task<IEnumerable<DocSpecialization>> GetSpecializations()
+        {
+            var specializations = await _context.DocSpecializations.ToListAsync();
+            return specializations;
+        }
     }
 }

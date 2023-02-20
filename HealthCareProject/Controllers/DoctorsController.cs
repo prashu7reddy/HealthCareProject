@@ -94,6 +94,12 @@ namespace HealthCareProject.Controllers
             }
             return NotFound("Doctor Not Found");
         }
+        [HttpGet("GetSpecializations")]
+        public async Task<IActionResult> GetSpecializations()
+        {
+            var specializations =await _DoctorRepository.GetSpecializations();
+            return Ok(specializations);
+        }
 
 
     }

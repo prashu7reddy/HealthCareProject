@@ -125,6 +125,12 @@ namespace HealthCareProject.Controllers
             var UserName = User.FindFirstValue(ClaimTypes.Name);
             return Ok(UserName);
         }
+        [HttpGet("GetRole")]
+        public IActionResult GetRole()
+        {
+            var Role = User.FindFirstValue(ClaimTypes.Role);
+            return Ok(Role);
+        }
     }
 }
 
