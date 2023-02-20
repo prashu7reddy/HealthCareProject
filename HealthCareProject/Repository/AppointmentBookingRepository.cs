@@ -57,7 +57,7 @@ namespace HealthCareProject.Repository
                 Id = x.Id,
                 Date = x.Date,
                 Time = x.Time,
-                DocSpecializationId = x.DocSpecializationId,
+                
                 SpecializationName = x.Specialization.SpecializationName
             }).ToList();
             return Appointment;
@@ -71,7 +71,7 @@ namespace HealthCareProject.Repository
                 Id = x.Id,
                 Date = x.Date,
                 Time = x.Time,
-                DocSpecializationId = x.DocSpecializationId,
+                
                 SpecializationName = x.Specialization.SpecializationName
             }).ToListAsync();
 

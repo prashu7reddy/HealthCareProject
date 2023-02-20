@@ -13,7 +13,7 @@ namespace HealthCareProject.Models
 
         // public DocSpecialization Specialization { get; set; }
 
-        public int DocSpecializationId { get; set; }
+       
         public string SpecializationName { get; set; }
     }
 }
