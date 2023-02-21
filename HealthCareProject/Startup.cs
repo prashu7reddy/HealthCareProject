@@ -53,7 +53,7 @@ namespace HealthCareProject
            services.AddScoped<IGetRepository<AppointmentBookingDto> ,AppointmentBookingRepository> ();
             services.AddScoped<IRepository<Patient>, PatientRepository>();
             services.AddScoped<IGetRepository<Patient>, PatientRepository>();
-
+            //services.AddScoped<IAppRepository<AppointmentBooking>, AppointmentBookingRepository>();
             services.AddScoped<IGetRepository<DoctorDto>, DoctorRepository>();
 
 

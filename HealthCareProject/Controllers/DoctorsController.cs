@@ -1,5 +1,6 @@
 ﻿using HealthCareProject.Models;
 using HealthCareProject.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -22,7 +23,7 @@ namespace HealthCareProject.Controllers
             _DoctorRepository = doctorRepository;
             _DoctorDtoRepository = DoctorDtoRepository;
         }
-
+      
         [HttpGet("GetAllDoctors")]
         
         public IEnumerable<DoctorDto> GetDoctors()
@@ -55,6 +56,7 @@ namespace HealthCareProject.Controllers
             return NotFound("please provide valid specialization");
         }
 
+       // [Authorize(Roles = "Admin")]
 
         [HttpPost("CreateDoctor")]
 
@@ -68,6 +70,8 @@ namespace HealthCareProject.Controllers
             await _repository.create(doctor);
             return CreatedAtRoute("GetDoctorById", new { id = doctor.Id },doctor);
         }
+      //  [Authorize(Roles = "Admin")]
+
         [HttpPut("UpdateDoctor/{id}")]
         public async Task<IActionResult> UpdateDoctor(int id,[FromBody]Doctor doctor)
         {
@@ -83,6 +87,9 @@ namespace HealthCareProject.Controllers
             return NotFound("Doctor Not Found");
 
         }
+     //   [Authorize(Roles = "Admin")]
+
+
         [HttpDelete("DeleteDoctor/{id}")]
         public async Task<IActionResult> DeleteDoctor(int id)
         {
@@ -94,6 +101,7 @@ namespace HealthCareProject.Controllers
             }
             return NotFound("Doctor Not Found");
         }
+       
         [HttpGet("GetSpecializations")]
         public async Task<IActionResult> GetSpecializations()
         {

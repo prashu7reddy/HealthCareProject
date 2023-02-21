@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HealthCareProject.Repository
 {
-    public class AppointmentBookingRepository : IRepository<AppointmentBooking>,IGetRepository<AppointmentBookingDto>
+    public class AppointmentBookingRepository : IRepository<AppointmentBooking>,IGetRepository<AppointmentBookingDto> /*IAppRepository<AppointmentBooking>*/
     {
         private readonly ApplicationDbContext _context;
         public AppointmentBookingRepository(ApplicationDbContext context)
@@ -29,6 +29,10 @@ namespace HealthCareProject.Repository
             var AppointmentInDb = await _context.AppointmentBookings.FindAsync(id);
             if (AppointmentInDb != null)
             {
+                AppointmentInDb.PatientName = obj.PatientName;
+                AppointmentInDb.Age = obj.Age;
+                AppointmentInDb.HealthIssue = obj.HealthIssue;
+                AppointmentInDb.PhoneNumber = obj.PhoneNumber;
                 AppointmentInDb.Date = obj.Date;
                 AppointmentInDb.Time = obj.Time;
                 AppointmentInDb.DocSpecializationId = obj.DocSpecializationId;
@@ -55,6 +59,10 @@ namespace HealthCareProject.Repository
             var Appointment = _context.AppointmentBookings.Include(m => m.Specialization).Select(x => new AppointmentBookingDto
             {
                 Id = x.Id,
+                PatientName=x.PatientName,
+                Age=x.Age,
+                HealthIssue=x.HealthIssue,
+                PhoneNumber=x.PhoneNumber,
                 Date = x.Date,
                 Time = x.Time,
                 
@@ -69,6 +77,10 @@ namespace HealthCareProject.Repository
             var appointments = await  _context.AppointmentBookings.Include(m => m.Specialization).Select(x => new AppointmentBookingDto
             {
                 Id = x.Id,
+                PatientName = x.PatientName,
+                Age = x.Age,
+                HealthIssue = x.HealthIssue,
+                PhoneNumber = x.PhoneNumber,
                 Date = x.Date,
                 Time = x.Time,
                 
@@ -82,7 +94,13 @@ namespace HealthCareProject.Repository
             }
             return null;
         }
+        //public async Task<IEnumerable<AppointmentBooking>> GetAllAppByPatId(int id)
+        //{
+        //    var appointments = await _context.AppointmentBookings.Where(h => h.PatientId == id).ToListAsync();
+        //    if (appointments.Count > 0)
+        //        return appointments;
+        //    return null;
+        //}
 
-       
     }
 }
