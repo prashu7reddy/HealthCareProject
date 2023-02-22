@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HealthCareProject.Repository
 {
-    public class AppointmentBookingRepository : IRepository<AppointmentBooking>,IGetRepository<AppointmentBookingDto> /*IAppRepository<AppointmentBooking>*/
+    public class AppointmentBookingRepository : IRepository<AppointmentBooking>,IGetRepository<AppointmentBookingDto> 
     {
         private readonly ApplicationDbContext _context;
         public AppointmentBookingRepository(ApplicationDbContext context)
@@ -94,13 +94,7 @@ namespace HealthCareProject.Repository
             }
             return null;
         }
-        //public async Task<IEnumerable<AppointmentBooking>> GetAllAppByPatId(int id)
-        //{
-        //    var appointments = await _context.AppointmentBookings.Where(h => h.PatientId == id).ToListAsync();
-        //    if (appointments.Count > 0)
-        //        return appointments;
-        //    return null;
-        //}
+       
 
     }
 }

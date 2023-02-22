@@ -30,7 +30,7 @@ namespace HealthCareProject.Controllers
         {
             return _appoinmentBookingRepository.GetAll();
         }
-        [Authorize]
+     
         [HttpGet]
         [Route("GetAppointmentById/{id}",Name ="GetAppointmentById")]
         public async Task<IActionResult>GetAppointmentById(int id)
@@ -43,7 +43,6 @@ namespace HealthCareProject.Controllers
             return NotFound();
         }
 
-        //[Authorize(Roles = "Patient")]
         [HttpPost("CreateAppointment")]
         public async Task<IActionResult> CreateAppointment([FromBody]AppointmentBooking appointment)
         {
@@ -56,7 +55,7 @@ namespace HealthCareProject.Controllers
 
         }
 
-       //[Authorize(Roles = "Patient")]
+     
         [HttpPut("UpdateAppointment/{id}")]
         public async Task<IActionResult> UpdateAppointment(int id,[FromBody]AppointmentBooking appointment)
         {
@@ -72,7 +71,7 @@ namespace HealthCareProject.Controllers
             return NotFound("Appointment Not Found");
         }
 
-       // [Authorize(Roles = "Patient,Doctor")]
+      
         [HttpDelete("DeleteAppointment/{id}")]
         public async Task<IActionResult> DeleteAppointment(int id)
         {
@@ -82,17 +81,9 @@ namespace HealthCareProject.Controllers
                 return Ok();
 
             }
+
             return NotFound("Appointment Not Found");
         }
-        //[HttpGet("GetAppByPatId/{id}")]
-        //public async Task<IActionResult> GetAppByPatId(int id)
-        //{
-        //    var appointents = await _appRepository.GetAllAppByPatId(id);
-        //    if (appointents != null)
-        //    {
-        //        return Ok(appointents);
-        //    }
-        //    return NotFound("No Appointments in this city");
-        //}
+      
     }
 }

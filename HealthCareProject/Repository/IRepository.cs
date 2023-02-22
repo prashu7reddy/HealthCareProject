@@ -29,8 +29,5 @@ namespace HealthCareProject.Repository
     {
         Task<T> GetUserId(string userName);
     }
-    //public interface IAppRepository<T> where T : class
-    //{
-    //    Task<IEnumerable<T>> GetAllAppByPatId(int id);
-    //}
+   
 }
