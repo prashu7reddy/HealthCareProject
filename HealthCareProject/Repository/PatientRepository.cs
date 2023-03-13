@@ -1,4 +1,5 @@
 ﻿using HealthCareProject.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,9 @@ namespace HealthCareProject.Repository
         {
             _context = context;
         }
+
+      
+
         public async Task<Patient> create(Patient obj)
         {
             if (obj != null)
@@ -40,6 +44,8 @@ namespace HealthCareProject.Repository
         {
             return _context.Patients.ToList();
         }
+
+      
 
         public async Task<Patient> GetById(int id)
         {

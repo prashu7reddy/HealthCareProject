@@ -7,9 +7,8 @@ namespace HealthCareProject.Models
 {
     public class AppointmentBooking
     {
+        public static int Count { get; internal set; }
         public int Id { get; set; }
-        //public Patient Patient { get; set; }
-        //public int PatientId { get; set; }
       
         public string PatientName { get; set; }
         public int Age { get; set; }
@@ -18,9 +17,9 @@ namespace HealthCareProject.Models
         public string PhoneNumber { get; set; }
         public DateTime Date{get;set;}
         public DateTime Time{get;set;}
-
+    public string DoctorName { get; set; }
         public DocSpecialization Specialization { get; set; }
-        
+         
         public int DocSpecializationId { get; set; }
     }
 }

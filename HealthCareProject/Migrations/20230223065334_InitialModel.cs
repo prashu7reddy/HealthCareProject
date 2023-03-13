@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HealthCareProject.Migrations
 {
-    public partial class initialModel : Migration
+    public partial class InitialModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -81,6 +81,7 @@ namespace HealthCareProject.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Time = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DoctorName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DocSpecializationId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

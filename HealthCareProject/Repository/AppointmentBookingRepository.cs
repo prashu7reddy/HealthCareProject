@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HealthCareProject.Repository
 {
-    public class AppointmentBookingRepository : IRepository<AppointmentBooking>,IGetRepository<AppointmentBookingDto> 
+    public class AppointmentBookingRepository : IRepository<AppointmentBooking>,IGetRepository<AppointmentBookingDto> ,IGetAllAppointmentsByName<AppointmentBooking>/*,IGetAllAppointmentsByDoctorName<AppointmentBooking>*/
     {
         private readonly ApplicationDbContext _context;
         public AppointmentBookingRepository(ApplicationDbContext context)
@@ -35,7 +35,9 @@ namespace HealthCareProject.Repository
                 AppointmentInDb.PhoneNumber = obj.PhoneNumber;
                 AppointmentInDb.Date = obj.Date;
                 AppointmentInDb.Time = obj.Time;
-                AppointmentInDb.DocSpecializationId = obj.DocSpecializationId;
+                AppointmentInDb.DoctorName = obj.DoctorName;
+                AppointmentInDb.Specialization = obj.Specialization;
+                //AppointmentInDb.DocSpecializationId = obj.DocSpecializationId;
                 _context.AppointmentBookings.Update(AppointmentInDb);
                 await _context.SaveChangesAsync();
                 return AppointmentInDb;
@@ -65,7 +67,7 @@ namespace HealthCareProject.Repository
                 PhoneNumber=x.PhoneNumber,
                 Date = x.Date,
                 Time = x.Time,
-                
+                DoctorName=x.DoctorName,
                 SpecializationName = x.Specialization.SpecializationName
             }).ToList();
             return Appointment;
@@ -83,7 +85,7 @@ namespace HealthCareProject.Repository
                 PhoneNumber = x.PhoneNumber,
                 Date = x.Date,
                 Time = x.Time,
-                
+                DoctorName=x.DoctorName,
                 SpecializationName = x.Specialization.SpecializationName
             }).ToListAsync();
 
@@ -94,7 +96,25 @@ namespace HealthCareProject.Repository
             }
             return null;
         }
-       
+        public async Task<IEnumerable<AppointmentBooking>> GetAllAppointmentsByPatientName(string PatientName)
+        {
+            var appointments = await _context.AppointmentBookings.Where(h => h.PatientName == PatientName).ToListAsync();
+            // h.UserName == PatientName).ToListAsync();
+            if (AppointmentBooking.Count > 0)
+                return appointments;
+            else
+                return appointments;
+        }
 
+        public async Task<IEnumerable<AppointmentBooking>> GetAllAppointmentsByDoctorName(string DoctorName)
+        {
+            var appointments = await _context.AppointmentBookings.Where(h => h.DoctorName == DoctorName).ToListAsync();
+            if (AppointmentBooking.Count > 0)
+            {
+                return appointments;
+            }
+            else
+                return appointments;
+        }
     }
 }

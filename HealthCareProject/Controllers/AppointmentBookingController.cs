@@ -14,37 +14,53 @@ namespace HealthCareProject.Controllers
     [ApiController]
     public class AppointmentBookingController : ControllerBase
     {
-        private readonly IRepository<AppointmentBooking> _repository; 
-        //private readonly IAppRepository<AppointmentBooking> _appRepository;
+        private readonly IRepository<AppointmentBooking> _repository;
+        private readonly IGetAllAppointmentsByName<AppointmentBooking> _appointmentRepo;
         private readonly IGetRepository<AppointmentBookingDto> _appoinmentBookingRepository;
+        //private readonly IGetAllAppointmentsByDoctorName<AppointmentBooking> _getAllAppointmentsByDoctorName;
 
-        public AppointmentBookingController(IRepository<AppointmentBooking> repository, IGetRepository<AppointmentBookingDto> appoinmentBookingRepository /*IAppRepository<AppointmentBooking> appRepository*/)
+        public AppointmentBookingController(IRepository<AppointmentBooking> repository, IGetRepository<AppointmentBookingDto> appoinmentBookingRepository, IGetAllAppointmentsByName<AppointmentBooking> appointmentRepo)
         {
             _repository = repository;
             _appoinmentBookingRepository = appoinmentBookingRepository;
-           // _appRepository = appRepository;
+             _appointmentRepo = appointmentRepo;
+         //   _getAllAppointmentsByDoctorName = getAllAppointmentsByDoctorName;
         }
         //[Authorize(Roles = "Admin,Doctor,Patient")]
         [HttpGet("GetAllBookings")]
-               public IEnumerable<AppointmentBookingDto> GetAppointments()
+        public IEnumerable<AppointmentBookingDto> GetAppointments()
         {
             return _appoinmentBookingRepository.GetAll();
         }
-     
+
         [HttpGet]
-        [Route("GetAppointmentById/{id}",Name ="GetAppointmentById")]
-        public async Task<IActionResult>GetAppointmentById(int id)
+        [Route("GetAppointmentById/{id}", Name = "GetAppointmentById")]
+        public async Task<IActionResult> GetAppointmentById(int id)
         {
             var appointment = await _appoinmentBookingRepository.GetById(id);
-            if(appointment != null)
+            if (appointment != null)
             {
                 return Ok(appointment);
             }
             return NotFound();
         }
 
+        //[HttpGet]
+        //[Route("GetAppointmentbyId/{id}", Name = "GetAppointmentbyId")]
+        //public async Task<IActionResult> GetAppointmentbyId(int id)
+        //{
+        //    var appointment = await _appoinmentBookingRepository.GetById(id);
+        //    if (appointment != null)
+        //    {
+        //        return Ok(appointment);
+        //    }
+        //    return NotFound();
+        //}
+
+
+
         [HttpPost("CreateAppointment")]
-        public async Task<IActionResult> CreateAppointment([FromBody]AppointmentBooking appointment)
+        public async Task<IActionResult> CreateAppointment([FromBody] AppointmentBooking appointment)
         {
             if (!ModelState.IsValid)
             {
@@ -55,9 +71,9 @@ namespace HealthCareProject.Controllers
 
         }
 
-     
+
         [HttpPut("UpdateAppointment/{id}")]
-        public async Task<IActionResult> UpdateAppointment(int id,[FromBody]AppointmentBooking appointment)
+        public async Task<IActionResult> UpdateAppointment(int id, [FromBody] AppointmentBooking appointment)
         {
             if (!ModelState.IsValid)
             {
@@ -71,7 +87,7 @@ namespace HealthCareProject.Controllers
             return NotFound("Appointment Not Found");
         }
 
-      
+
         [HttpDelete("DeleteAppointment/{id}")]
         public async Task<IActionResult> DeleteAppointment(int id)
         {
@@ -81,9 +97,30 @@ namespace HealthCareProject.Controllers
                 return Ok();
 
             }
-
-            return NotFound("Appointment Not Found");
+            return Ok();
+            
         }
-      
+        [HttpGet("GetAllAppointmentsByPatientName/{patientName}")]
+        public async Task<IActionResult> GetAppointmentByPatientName(string patientName)
+        {
+            var appointment = await _appointmentRepo.GetAllAppointmentsByPatientName(patientName);
+            if (appointment != null)
+            {
+                return Ok(appointment);
+            }
+            return NotFound();
+        }
+        [HttpGet("GetAllAppointmentsByDoctorName/{doctorName}")]
+        public   async Task<IActionResult> GetAppointmentByDoctorName(string doctorName)
+        {
+            var appointment = await _appointmentRepo.GetAllAppointmentsByDoctorName(doctorName);
+            if (appointment != null)
+            {
+                return Ok(appointment);
+            }
+            return NotFound();
+        }
+
+
     }
 }

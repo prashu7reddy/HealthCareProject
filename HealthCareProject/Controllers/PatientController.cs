@@ -15,11 +15,13 @@ namespace HealthCareProject.Controllers
     {
         private readonly IRepository<Patient> _repository;
         private readonly IGetRepository<Patient> _PatientRepository;
+       
 
         public PatientController(IRepository<Patient> repository,IGetRepository<Patient> getRepository)
         {
             _repository = repository;
             _PatientRepository = getRepository;
+          
         }
 
         [HttpGet("GetAllPatients")]
@@ -81,5 +83,7 @@ namespace HealthCareProject.Controllers
             }
             return NotFound("Patient Not Found");
         }
+      
+       
     }
 }

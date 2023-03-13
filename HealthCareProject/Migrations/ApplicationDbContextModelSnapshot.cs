@@ -35,6 +35,9 @@ namespace HealthCareProject.Migrations
                     b.Property<int>("DocSpecializationId")
                         .HasColumnType("int");
 
+                    b.Property<string>("DoctorName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("HealthIssue")
                         .HasColumnType("nvarchar(max)");
 

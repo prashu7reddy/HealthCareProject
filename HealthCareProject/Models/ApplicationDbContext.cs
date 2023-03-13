@@ -24,7 +24,6 @@ namespace HealthCareProject.Models
         public DbSet<UserRoles> Roles { get; set; }
 
         public DbSet<UserRoleMappings> UserRoleMpping { get; set; }
-
-
+      
     }
 }

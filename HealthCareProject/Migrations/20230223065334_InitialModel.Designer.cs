@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthCareProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230221134346_initialModel")]
-    partial class initialModel
+    [Migration("20230223065334_InitialModel")]
+    partial class InitialModel
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,6 +36,9 @@ namespace HealthCareProject.Migrations
 
                     b.Property<int>("DocSpecializationId")
                         .HasColumnType("int");
+
+                    b.Property<string>("DoctorName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HealthIssue")
                         .HasColumnType("nvarchar(max)");

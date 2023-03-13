@@ -25,9 +25,19 @@ namespace HealthCareProject.Repository
         Task<IEnumerable<Doctor>> SearchBySpecialization(string SpecializationName);
         Task<IEnumerable<DocSpecialization>> GetSpecializations();
     }
+   
     public interface IGetUserDetailsRepository<T> where T : class
     {
         Task<T> GetUserId(string userName);
     }
-   
+    public interface IGetAllAppointmentsByName<T> where T : class
+    {
+        Task<IEnumerable<T>> GetAllAppointmentsByPatientName(string PatientName);
+        Task<IEnumerable<T>> GetAllAppointmentsByDoctorName(string DoctorName);
+    }
+    //public interface IGetAllAppointmentsByDoctorName<T> where T : class
+    //{
+    //    Task<IEnumerable<T>> GetAllAppointmentsByDoctorName(string DoctorName);
+    //}
+
 }

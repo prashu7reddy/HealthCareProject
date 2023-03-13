@@ -46,10 +46,10 @@ namespace HealthCareProject.Controllers
             return Ok();
         }
 
-        [HttpPost("Login")]
-        public IActionResult Login([FromBody] UserLogin login)
+        [HttpPost("PatientLogin")]
+        public IActionResult PatientLogin([FromBody] UserLogin login)
         {
-            var currentUser = _dbContext.Users.FirstOrDefault(x => x.UserName == login.UserName);
+            var currentUser = _dbContext.Users.FirstOrDefault(x => x.UserName == login.UserName && x.Role=="Patient");
 
             if (currentUser == null)
             {
@@ -130,6 +130,63 @@ namespace HealthCareProject.Controllers
         {
             var Role = User.FindFirstValue(ClaimTypes.Role);
             return Ok(Role);
+        }
+
+
+        ////////////////////////////
+        
+        [HttpPost("AdminLogin")]
+        public IActionResult AdminLogin([FromBody] UserLogin login)
+        {
+            var currentUser = _dbContext.Users.FirstOrDefault(x => x.UserName == login.UserName  && x.Role=="Admin");
+
+            if (currentUser == null)
+            {
+                return BadRequest("Invalid Username");
+            }
+
+            var isValidPassword = VerifyPassword(login.Password, currentUser.PasswordSalt, currentUser.PasswordHash);
+
+            if (!isValidPassword)
+            {
+                return BadRequest("Invalid Password");
+            }
+
+            var token = GenerateToken(currentUser);
+
+            if (token == null)
+            {
+                return NotFound("Invalid credentials");
+            }
+
+            return Ok(token);
+        }
+        /////////////////////
+        [HttpPost("DoctorLogin")]
+        public IActionResult DoctorLogin([FromBody] UserLogin login)
+        {
+            var currentUser = _dbContext.Users.FirstOrDefault(x => x.UserName == login.UserName && x.Role == "Doctor");
+
+            if (currentUser == null)
+            {
+                return BadRequest("Invalid Username");
+            }
+
+            var isValidPassword = VerifyPassword(login.Password, currentUser.PasswordSalt, currentUser.PasswordHash);
+
+            if (!isValidPassword)
+            {
+                return BadRequest("Invalid Password");
+            }
+
+            var token = GenerateToken(currentUser);
+
+            if (token == null)
+            {
+                return NotFound("Invalid credentials");
+            }
+
+            return Ok(token);
         }
     }
 }
